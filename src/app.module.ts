@@ -16,12 +16,14 @@ import { mockAppService } from './app.service';
       port: 3306,
       username: "root",
       password: "root",
-      database: "ceshi",
+      database: "ceshi",// /*youer DatabeseName*/
       entities: ["dist/**/*.entity{.ts,.js}"],
+      // entities: [__dirname + '/**/*.entity{.ts,.js}'], // 扫描本项目中.entity.ts或者.entity.js的文件  可以看看我的目录结构，当然你可以自己构建自己的 目录结构
       synchronize: true,
     }),],
   // 如果你这个模块中的provider 要在别的模块中使用 你必须要在这里声明 导出这些provider ，当然 你也可以把 这个module导出其他地方import 一下这样其他模块中的provider 也是可以使用的
   // exports:[], 
+  // 把 controller放在这个里面就好了 通过@Module 装饰器将元数据附加到模块类中 Nest 可以轻松反射（reflect）出哪些控制器（controller）必须被安装
   controllers: [AppController],
   // 由 Nest 注入器实例化的提供者，并且可以至少在整个模块中共享
   providers: [AppService],// 声明provider
