@@ -4,23 +4,37 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { mockAppService } from './app.service';
+import { ConfigModule,ConfigService } from '@nestjs/config';
+import APP_globalConfig from './config/configuration';
+import DatabaseConfig from './config/database';
+
 // 如果你需要把这个模块 暴露到全局使用可以加 一个装饰器 @Global
 // 使一切全局化并不是一个好的解决方案。 全局模块可用于减少必要模板文件的数量。 `imports` 数组仍然是使模块 API 透明的最佳方式。
 // @Global()
 @Module({
   // 可以注入 其他module 或者provider
   imports: [UserModule,
-    TypeOrmModule.forRoot({
-      type: "mysql",
-      host: "localhost",
-      port: 3306,
-      username: "root",
-      password: "root",
-      database: "ceshi",// /*youer DatabeseName*/
-      entities: ["dist/**/*.entity{.ts,.js}"],
-      // entities: [__dirname + '/**/*.entity{.ts,.js}'], // 扫描本项目中.entity.ts或者.entity.js的文件  可以看看我的目录结构，当然你可以自己构建自己的 目录结构
-      synchronize: true,
-    }),],
+    TypeOrmModule.forRootAsync({
+      imports:[ConfigModule], 
+      useFactory:async (configService:ConfigService)=>{
+        return {
+          type: "mysql",
+          host: configService.get('database.host'),//"localhost",
+          port: Number(DatabaseConfig().port),
+          username: DatabaseConfig().username,
+          password: DatabaseConfig().password,
+          database: DatabaseConfig().database,// /*youer DatabeseName*/
+          // entities: ["dist/**/*.entity{.ts,.js}"],
+          entities: [__dirname + '/**/*.entity{.ts,.js}'], // 扫描本项目中.entity.ts或者.entity.js的文件  可以看看我的目录结构，当然你可以自己构建自己的 目录结构
+          synchronize: true,
+        }
+      }
+    }),
+    ConfigModule.forRoot({
+      isGlobal:true,
+      load:[APP_globalConfig,DatabaseConfig]
+    })
+  ],
   // 如果你这个模块中的provider 要在别的模块中使用 你必须要在这里声明 导出这些provider ，当然 你也可以把 这个module导出其他地方import 一下这样其他模块中的provider 也是可以使用的
   // exports:[], 
   // 把 controller放在这个里面就好了 通过@Module 装饰器将元数据附加到模块类中 Nest 可以轻松反射（reflect）出哪些控制器（controller）必须被安装
