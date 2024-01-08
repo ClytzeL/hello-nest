@@ -86,3 +86,24 @@ import DatabaseConfig from './config/database';
   
 })
 export class AppModule {}
+
+// 使用logger.middleware的时候和其他Provider保持一致
+// 使用 Provider 的方法非常简单 这里不详细说明了，之前文章队Provider由详细的说明
+
+// 也可以使用 直接把它丢给 constructor 处理
+// @Module({
+//   imports: [CatsModule],
+// })
+// export class AppModule implements NestModule {
+// // configure是基于 NestModule的实现的，我们实现它，然后重写了这个方法并且把拦截器丢了进去
+
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer
+// //      .apply(LoggerMiddleware)
+// //      .forRoutes({ path: 'cats', method: RequestMethod.GET }); // 你需要给那个路由那个方啊，应用这个中间件？ 一般的你也可以传递 指定路由的 Controller 进去。
+//         .apply(cors(), helmet(), logger) // 我们也可以传递函数作为中间价 只要它next就好了
+//         .exclude( { path: 'cats', method: RequestMethod.GET }, { path: 'cats', method: RequestMethod.POST }, 'cats/(.*)', )
+//         .forRoutes(CatsController); 
+      
+//   }
+// }
