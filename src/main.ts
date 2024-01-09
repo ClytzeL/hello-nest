@@ -5,12 +5,18 @@ import { HttpExceptionFilter } from './common/filter/http-exception/http-excepti
 import { TransformInterceptor } from './common/interceptor/transform/transform.interceptor';
 import APP_globalConfig from './config/configuration';
 import { logger } from './middleware/logger.middleware';
+import { AllExceptionsFilter } from './filter/any-exception.filter';
+
 async function bootstrap() {
   // 选择 NestExpress
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalInterceptors(new TransformInterceptor());
-  app.use(logger);
+  // 错误异常捕获 和 过滤处理
+  app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new HttpExceptionFilter()); // 全局统一异常返回体
+  app.useGlobalInterceptors(new TransformInterceptor()); // 使用全局拦截器 收集日志
+  // 要想在全局使用 你可以在main中直接use
+  //日志相关
+  app.use(logger); // 所有请求都打印日志  logger ？
   await app.listen(APP_globalConfig().port);
 }
 bootstrap();

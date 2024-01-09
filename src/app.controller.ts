@@ -1,6 +1,8 @@
 import { Controller, Get,Post,Res,Req,Body,HttpStatus,Param,Query,HttpCode,Redirect,Header,Inject } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Request,Response } from 'express';
+
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -68,5 +70,7 @@ export class AppController {
       return { url: 'https://docs.nestjs.com/v5/' };
     }
   }
+
+  
 
 }

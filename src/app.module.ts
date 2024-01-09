@@ -1,4 +1,4 @@
-import { Module,DynamicModule } from '@nestjs/common';
+import { Module,DynamicModule,MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -7,6 +7,7 @@ import { mockAppService } from './app.service';
 import { ConfigModule,ConfigService } from '@nestjs/config';
 import APP_globalConfig from './config/configuration';
 import DatabaseConfig from './config/database';
+import { LoggerMiddleware } from './middleware/logger.middleware';
 
 // 如果你需要把这个模块 暴露到全局使用可以加 一个装饰器 @Global
 // 使一切全局化并不是一个好的解决方案。 全局模块可用于减少必要模板文件的数量。 `imports` 数组仍然是使模块 API 透明的最佳方式。
