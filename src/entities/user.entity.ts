@@ -33,4 +33,3 @@ export class User {
   @OneToMany(() => Article, (article) => article.create_by)
   articles: Article[];
 }
-
