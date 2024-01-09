@@ -23,14 +23,14 @@ import {
   @UseInterceptors(new HttpReqTransformInterceptor<any>()) // 统一返回体
   export class TagController {
     constructor(private readonly tagService: TagService) {}
-  
+   // 鉴权使用，认证策略：jwt
     @UseGuards(AuthGuard('jwt'))
     @Get('/tags')
     async getAll() {
       const value = await this.tagService.getAll();
       return value;
     }
-  
+  // 鉴权使用，认证策略：local
     @UseGuards(AuthGuard('local'))
     @Post()
     async createTag(@Body() tagInfo: Tag) {
