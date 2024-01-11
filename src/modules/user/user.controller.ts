@@ -13,11 +13,11 @@ import {
   import { ApiTags } from '@nestjs/swagger';
   import { UserInfoDTO } from 'src/dto/user.dto';
   import { User } from 'src/entities/user.entity';
-  import { HttpReqTransformInterceptor } from 'src/interceptor/http-req.interceptor';
+  import { HttpReqTransformInterceptor } from '../../interceptor/http-req.interceptor';
   import { ValidationPipe } from 'src/pipe/validation.pipe';
   import { UserService } from './user.service';
   import { ClientProxy } from '@nestjs/microservices';
-  
+
   @ApiTags('User相关')
   @Controller('user')
   @UseInterceptors(new HttpReqTransformInterceptor<any>()) // 统一返回体
