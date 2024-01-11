@@ -24,7 +24,7 @@
 // // 也可以全局使用
 // app.useGlobalInterceptors(new LoggingInterceptor());
 
-// 全局 拦截器 用来收集日志
+// 全局 拦截器 用来收集日志，给req加点东西
 import {
     CallHandler,
     ExecutionContext,
