@@ -27,4 +27,4 @@ export class HttpExceptionFilter implements ExceptionFilter {
 }
 
 // 一般来说 像上面的这个过滤器全局处理异常的，都应该作为全局使用 main
-app.useGlobalFilters(new AllExceptionsFilter());
+// app.useGlobalFilters(new AllExceptionsFilter());

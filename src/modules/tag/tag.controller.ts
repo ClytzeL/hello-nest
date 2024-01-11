@@ -14,7 +14,9 @@ import {
   import { InterParams } from 'src/typings/controller';
   import { Tag } from 'src/entities/tag.entity';
   import { AuthGuard } from '@nestjs/passport';
-  import { HttpReqTransformInterceptor } from 'src/filter/http-req.filter';
+  // import { HttpReqTransformInterceptor } from 'src/filter/http-req.filter';
+  import { HttpReqTransformInterceptor } from '../../interceptor/http-req.interceptor';
+
   import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
   
   @ApiTags('Tag相关')
